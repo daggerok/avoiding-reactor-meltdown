@@ -1,0 +1,4 @@
+
+# Project exclude paths
+/mongo/target/
+/name-service/target/

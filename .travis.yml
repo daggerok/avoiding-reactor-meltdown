@@ -1,0 +1,46 @@
+notifications:
+  email: false
+language: python
+python: 3.8
+jdk: openjdk11
+os: linux
+arch: amd64
+addons:
+  apt:
+    update: false
+    packages:
+      - jq
+      - curl
+install: true
+before_install:
+  - |
+    if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
+      mkdir -p ${HOME}/.local/daggerok/bash-functions/master ;
+      curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+    fi
+    source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
+  - stop_any 80 5432 8080
+  #
+  - |
+    python -m pip install --upgrade pip setuptools pyopenssl
+    python -m pip install --upgrade httpie
+jobs:
+  include:
+    - stage: test
+      name: integration tests
+      before_script:
+        - cd $TRAVIS_BUILD_DIR && ./mvnw
+        - bash $TRAVIS_BUILD_DIR/mongo/target/*.jar &
+        - bash $TRAVIS_BUILD_DIR/name-service/target/*.jar &
+        - wait_for 8080
+      script:
+        - echo ololo
+      after_script:
+        - stop_any 80
+    - stage: test
+      name: tests
+      script: cd $TRAVIS_BUILD_DIR && ./mnw
+cache:
+  directories:
+    - ~/.m2
+    - ~/.local/daggerok
