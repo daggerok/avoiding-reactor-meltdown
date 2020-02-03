@@ -39,7 +39,7 @@ jobs:
         - stop_any 80
     - stage: test
       name: tests
-      script: cd $TRAVIS_BUILD_DIR && ./mnw
+      script: cd $TRAVIS_BUILD_DIR && ./mvnw
 cache:
   directories:
     - ~/.m2

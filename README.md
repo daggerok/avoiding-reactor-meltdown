@@ -1,4 +1,4 @@
-# how to block in reactor
+# how to block in reactor [![Build Status](https://travis-ci.org/daggerok/avoiding-reactor-meltdown.svg?branch=master)](https://travis-ci.org/daggerok/avoiding-reactor-meltdown)
 ...when it's needed
 
 ```bash

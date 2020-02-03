@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.blockhound.BlockHound;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.ReactorBlockHoundIntegration;
 import reactor.tools.agent.ReactorDebugAgent;
 
 import java.util.function.Supplier;
@@ -19,6 +21,7 @@ import java.util.function.Supplier;
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
+        BlockHound.install();
         ReactorDebugAgent.init();
         SpringApplication.run(Main.class, args);
     }
