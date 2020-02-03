@@ -15,7 +15,7 @@ and maybe even not planed to be reactive, legacy libraries, JDBC, ThreadLocal, e
 ## solve problem
 
 * bad: create separate microservice, which will call blocking one
-* good: perform all blocking calls [in a separate thread](name-service/src/main/java/daggerok/Main.java#L134) provided by special defined scheduled
+* good: perform all blocking calls [in a separate thread](name-service/src/main/java/daggerok/Main.java#L120) provided by special defined scheduled
 
 ## run and test
 

@@ -70,28 +70,14 @@ class NameTestData {
 
     @Bean
     InitializingBean postConstruct(NameRepository nameRepository) {
-        // return () -> nameRepository.deleteAll()
-        //                            .thenMany(nameRepository.saveAll(names().get()))
-        //                            .thenMany(nameRepository.findAll())
-        //                            .subscribe(log::info);
+        // return () -> nameRepository.deleteAll().thenMany(nameRepository.saveAll(names().get()))
+        //                            .thenMany(nameRepository.findAll()).subscribe(log::info);
         return () -> nameRepository.deleteAll()
                                    .thenMany(names().get().concatMap(nameRepository::save))
                                    .thenMany(nameRepository.findAll())
                                    .subscribe(log::info);
     }
 }
-
-@With
-@Value
-@Document
-class ServerData {
-
-    @Id
-    private final String id;
-    private final Map<String, String> data;
-}
-
-interface ServerDataRepository extends ReactiveMongoRepository<ServerData, String> { }
 
 /**
  * Let's assume we cannot change or refactor this service...
@@ -141,13 +127,7 @@ class SolutionByWrappingServiceWithSpecialScheduler {
 @RequiredArgsConstructor
 class Resources {
 
-    private final ServerDataRepository serverDataRepository;
     private final SolutionByWrappingServiceWithSpecialScheduler service;
-
-    @GetMapping("/mongo")
-    Flux<ServerData> mongo() {
-        return serverDataRepository.findAll();
-    }
 
     @GetMapping("/reverse/{string}")
     Mono<Map<String, String>> reverse(@PathVariable String string) {
@@ -160,7 +140,6 @@ class Resources {
         var uri = exchange.getRequest().getURI();
         Function<String, String> url = path -> String.format("%s://%s%s", uri.getScheme(), uri.getAuthority(), path);
         return Map.of("_self", uri.toString(),
-                      "mongo server props GET", url.apply("/mongo"),
                       "reverse string GET", url.apply("/reverse/{string}"));
     }
 }

@@ -35,7 +35,7 @@ jobs:
         - bash $TRAVIS_BUILD_DIR/name-service/target/*.jar &
         - wait_for 8080
       script:
-        - http :8080/mongo
+        - http :8080/reverse/ololo-trololo
       after_script:
         - stop_any 8080 27017
     - stage: test

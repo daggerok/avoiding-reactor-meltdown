@@ -2,7 +2,3 @@ GET http://localhost:8080/reverse/trololo
 Accept: application/json
 
 ###
-GET http://localhost:8080/mongo?id=99
-Accept: application/json
-
-###
