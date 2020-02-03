@@ -1,4 +1,30 @@
+### IntelliJ IDEA ###
+.idea
+!.idea/
+.idea/*
+!.idea/runConfigurations/
+*.iws
+*.iml
+*.ipr
+*.log*
+target/
 
-# Project exclude paths
-/mongo/target/
-/name-service/target/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
